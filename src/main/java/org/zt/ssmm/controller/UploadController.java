@@ -46,7 +46,7 @@ public class UploadController {
 	 * @param file
 	 * @return
 	 */
-	private boolean saveFile(HttpServletRequest request, MultipartFile file) {
+	private boolean saveFile(HttpServletRequest request, MultipartFile file,String type) {
 		// 判断文件是否为空
 		if (!file.isEmpty()) {
 			try {
@@ -56,12 +56,14 @@ public class UploadController {
 				String filename=j.format(i)+""+p;
 				// 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
 				String filePath = 
-//						request.getSession().getServletContext().getRealPath("/") +
-						"/usr/local/upload" +filename+".jpg";
+						request.getSession().getServletContext().getRealPath("/") +"upload/"
+//						"/usr/local/upload/" 
+						
+		+filename+".jpg";
 
 				Uploadpic temp=new Uploadpic();
 				temp.setName(request.getSession().getAttribute("id").toString());
-				temp.setBelong("");
+				temp.setBelong(type);
 				temp.setUrl(filename);
 				pics.insertUploadPic(temp);
 
@@ -89,7 +91,7 @@ public class UploadController {
 	 */
 	@RequestMapping("/filesUpload")
 	@ResponseBody
-	public Object filesUpload(@RequestParam("myfiles") MultipartFile[] files,
+	public Object filesUpload(@RequestParam("myfiles") MultipartFile[] files,String type,
 			HttpServletRequest request) {
 		boolean j = false;
 		Returntype text=new Returntype();
@@ -102,7 +104,7 @@ public class UploadController {
 				for (int i = 0; i < files.length; i++) {
 					MultipartFile file = files[i];
 					// 保存文件
-					j= saveFile(request, file);
+					j= saveFile(request, file,type);
 					System.out.println(j);
 				}
 			}
