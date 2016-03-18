@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.zt.ssmm.core.Article;
 import org.zt.ssmm.core.Returntype;
 import org.zt.ssmm.core.User;
 import org.zt.ssmm.core.Userdata;
@@ -81,6 +82,53 @@ public class UserController
 		return text;  
 	}  
 
+	/** 
+	 * 测试返回JSON数据 
+	 * @param session 
+	 * @return 
+	 */  
+	@RequestMapping(value="/selectArticle" )  
+	@ResponseBody  
+	public Object selectArticle(HttpServletRequest req,String id){  
+		Article ar =new Article();
+		ar=us.selectArticle(id);
+
+		Returntype text=new Returntype();
+		ReturnUtil.fix(text,"_KEYS_s01");
+		text.setData(ar);
+		return text;  
+	} 
+
+	/** 
+	 * 
+	 * @param session 
+	 * @return 
+	 */  
+	@RequestMapping(value="/insertArticle" )  
+	@ResponseBody  
+	public Object insertArticle(HttpServletRequest req, String title, String type, String text){  
+
+		Article ar=new Article();
+
+		ar.setUser_id( (Integer) req.getSession().getAttribute("id"));
+		ar.setTitle(title);
+		ar.setType(type);
+		ar.setText(text);
+
+		int i =	us.insertArticle(ar);
+
+		Returntype temp=new Returntype();
+		if(i==1){
+			ReturnUtil.fix(temp,"_KEYS_s02");
+			return temp;  
+		}
+		else{
+			ReturnUtil.fix(temp,"_KEYS_f03");
+			return temp;  
+		}
+
+	}  
+
 
 	@RequestMapping("/addUser")
 	@ResponseBody  
@@ -105,27 +153,27 @@ public class UserController
 		}
 
 		else{
-		        if (!(code.equalsIgnoreCase(session.getAttribute("code").toString()))) {  //忽略验证码大小写
-		        	ReturnUtil.fix(text,"_KEYS_f05");
-					return text;  
-		        }
-		        else if(!(telcode.equalsIgnoreCase(session.getAttribute("telcode").toString()))){
-		        	ReturnUtil.fix(text,"_KEYS_f06");
-					return text;  
-		        }
-		        else{
-			Integer i=0;
-			i=us.insertUserAndPassword(role);
-			if(i==1){
-				ReturnUtil.fix(text,"_KEYS_s02");
+			if (!(code.equalsIgnoreCase(session.getAttribute("code").toString()))) {  //忽略验证码大小写
+				ReturnUtil.fix(text,"_KEYS_f05");
+				return text;  
+			}
+			else if(!(telcode.equalsIgnoreCase(session.getAttribute("telcode").toString()))){
+				ReturnUtil.fix(text,"_KEYS_f06");
 				return text;  
 			}
 			else{
+				Integer i=0;
+				i=us.insertUserAndPassword(role);
+				if(i==1){
+					ReturnUtil.fix(text,"_KEYS_s02");
+					return text;  
+				}
+				else{
 
-				ReturnUtil.fix(text,"_KEYS_f03");
-				return text;  
+					ReturnUtil.fix(text,"_KEYS_f03");
+					return text;  
+				}
 			}
-		        }
 		}
 	}
 
@@ -141,7 +189,7 @@ public class UserController
 		text.setData(u);
 		return text;  
 	}
-	
+
 	@RequestMapping("/checkphone")
 	@ResponseBody  
 	public Object checkPhone(String telcode, HttpServletRequest req)
@@ -157,9 +205,9 @@ public class UserController
 	@ResponseBody  
 	public Object updateUserdata(String sTitle,String title,String career,String abme,String mywk, HttpServletRequest req,HttpSession httpSession)
 	{
-		
+
 		int u = (Integer) req.getSession().getAttribute("id");
-		
+
 		Userdata p=new Userdata();
 		p.setAbme(abme);
 		p.setCareer(career);
@@ -167,7 +215,7 @@ public class UserController
 		p.setMywk(mywk);
 		p.setsTitle(sTitle);
 		p.setTitle(title);
-		
+
 		int i= us.updateUserdata(p);
 		if(i==1){
 			Returntype text=new Returntype();
@@ -187,11 +235,11 @@ public class UserController
 		CloseableHttpClient	httpClient	=	HttpClients.createDefault();
 		Integer i=(int) Math.round(Math.random()*9000+1000);
 		String str="{'code':'"+i.toString()+"','product':'乖乖博客'}";
-		
+
 		HttpSession session = req.getSession();
-        session.setAttribute("telcode", i.toString());
-        System.out.println(i.toString());
-        
+		session.setAttribute("telcode", i.toString());
+		System.out.println(i.toString());
+
 		try	{
 			//	请求地址
 			HttpUriRequest	httpGet	=	RequestBuilder

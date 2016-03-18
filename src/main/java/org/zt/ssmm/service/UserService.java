@@ -2,6 +2,7 @@ package org.zt.ssmm.service;
 
 import java.util.List;
 
+import org.zt.ssmm.core.Article;
 import org.zt.ssmm.core.Ip;
 import org.zt.ssmm.core.User;
 import org.zt.ssmm.core.Userdata;
@@ -25,6 +26,8 @@ public interface UserService
 	int insertPhoneToday(String phone);
 	int insertBlackIp(Ip info);
 	int selectBlackIp(Ip info);
+	int insertArticle(Article info);
+	Article selectArticle(String info);
 
 //	Integer deleteUserAndPassword(Integer valueOf);
 }

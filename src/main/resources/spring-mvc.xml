@@ -76,6 +76,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
             <mvc:mapping path="/userController/showUser1.*" />  
             <mvc:mapping path="/userController/test.*" />  
             <mvc:mapping path="/userController/updateUserdata.*" /> 
+            <mvc:mapping path="/userController/insertArticle.*" /> 
             <mvc:mapping path="/upload/filesUpload.*" /> 
         <bean class="org.zt.ssmm.interceptor.CommonInterceptor"/>       
     </mvc:interceptor>  

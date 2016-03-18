@@ -2,6 +2,7 @@ package org.zt.ssmm.dao;
 
 import java.util.List;
 
+import org.zt.ssmm.core.Article;
 import org.zt.ssmm.core.Ip;
 import org.zt.ssmm.core.Uploadpic;
 import org.zt.ssmm.core.User;
@@ -37,4 +38,7 @@ public interface UserMapper {
     int selectBlackIp(Ip info);
     
     int insertUploadPic(Uploadpic info);
+    
+     int 	insertArticle(Article info);
+     Article selectArticle(String info) ;
 }

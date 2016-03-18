@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zt.ssmm.core.Article;
 import org.zt.ssmm.core.Ip;
 import org.zt.ssmm.core.User;
 import org.zt.ssmm.core.Userdata;
@@ -110,8 +111,16 @@ public class UserServiceImpl implements UserService
 		return userMapper.selectBlackIp(info);
 	}
 	
-
-	
+	@Override
+	public int 	insertArticle(Article info)
+	{
+		return userMapper.insertArticle(info);
+	}
+	@Override
+	public Article selectArticle(String info) 
+	{
+		return userMapper.selectArticle(info);
+	}
 	
 	public UserMapper getUserMapper() {
 		return userMapper;
