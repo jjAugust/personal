@@ -6,6 +6,7 @@ public class Uploadpic {
 	private String name;
 	private String time;
 	private String belong;
+	private String desr;
 	public String getId() {
 		return id;
 	}
@@ -35,5 +36,11 @@ public class Uploadpic {
 	}
 	public void setBelong(String belong) {
 		this.belong = belong;
+	}
+	public String getDesr() {
+		return desr;
+	}
+	public void setDesr(String desr) {
+		this.desr = desr;
 	}
 }

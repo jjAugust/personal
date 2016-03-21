@@ -10,13 +10,27 @@ public class Article {
 	private String type;
 	private String text;
 //	private Uploadpic Uploadpic;
-	private List<Uploadpic> Uploadpic;
-
-	public List<Uploadpic> getUploadpics() {
-		return Uploadpic;
+//	private List<Uploadpic> Uploadpic;
+//
+//	public List<Uploadpic> getUploadpics() {
+//		return Uploadpic;
+//	}
+//	public void setUploadpics(List<Uploadpic> uploadpics) {
+//		Uploadpic = uploadpics;
+//	}
+	private String url;
+	private String desr;
+	public String getUrl() {
+		return url;
 	}
-	public void setUploadpics(List<Uploadpic> uploadpics) {
-		Uploadpic = uploadpics;
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getDesr() {
+		return desr;
+	}
+	public void setDesr(String desr) {
+		this.desr = desr;
 	}
 	public int getId() {
 		return id;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.zt.ssmm.core.Article;
 import org.zt.ssmm.core.Ip;
+import org.zt.ssmm.core.Uploadpic;
 import org.zt.ssmm.core.User;
 import org.zt.ssmm.core.Userdata;
 
@@ -27,7 +28,8 @@ public interface UserService
 	int insertBlackIp(Ip info);
 	int selectBlackIp(Ip info);
 	int insertArticle(Article info);
-	Article selectArticle(String info);
+	List<Article> selectArticle(String info);
+	List<Uploadpic> selectUsPic(String info);
 
 //	Integer deleteUserAndPassword(Integer valueOf);
 }

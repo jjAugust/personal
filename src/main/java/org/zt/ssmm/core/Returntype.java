@@ -6,6 +6,7 @@ public class Returntype {
 
 	private String message;
 	private Object data;
+	private Object pic;
 
 
 
@@ -40,6 +41,16 @@ public class Returntype {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+
+	public Object getPic() {
+		return pic;
+	}
+
+
+	public void setPic(Object pic) {
+		this.pic = pic;
 	}
 
 

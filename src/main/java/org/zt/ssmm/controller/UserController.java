@@ -2,6 +2,7 @@ package org.zt.ssmm.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -91,11 +92,12 @@ public class UserController
 	@ResponseBody  
 	public Object selectArticle(HttpServletRequest req,String id){  
 		Article ar =new Article();
-		ar=us.selectArticle(id);
+//		ar=us.selectArticle(id);
+		 List<Article> list = us.selectArticle(id);
 
 		Returntype text=new Returntype();
 		ReturnUtil.fix(text,"_KEYS_s01");
-		text.setData(ar);
+		text.setData(list);
 		return text;  
 	} 
 

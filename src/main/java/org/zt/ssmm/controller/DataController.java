@@ -1,5 +1,6 @@
 package org.zt.ssmm.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zt.ssmm.core.Returntype;
+import org.zt.ssmm.core.Uploadpic;
 import org.zt.ssmm.core.User;
 import org.zt.ssmm.core.Userdata;
 import org.zt.ssmm.service.UserService;
@@ -28,10 +30,12 @@ public class DataController {
 	public Object showUser1( String id, HttpServletRequest req)
 	{
 		Userdata u = us.getInfoById(id);
+		List<Uploadpic> list=us.selectUsPic(id);
 		Returntype text=new Returntype();
 		ReturnUtil.fix(text,"_KEYS_s01");
 //		System.out.println(u);
 		text.setData(u);
+		text.setPic(list);
 		return text;  
 	}
 	
