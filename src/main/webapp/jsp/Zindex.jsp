@@ -58,7 +58,8 @@ app.controller('customersCtrl', function($scope, $http) {
 <div class="wrapper">
     <div id="top">
         <div id="logo">
-           <!--  <img id="logoimage" src="images/logo.png" alt="logo"> -->   <!-- Logo image -->
+           <!--  <img id="logoimage" src="images/logo.png" alt="logo"> --> 
+             <!-- Logo image -->
             <h1 id="logotitle">{{names.sTitle}}</h1>    <!-- Logo text -->
         </div><!--/logo-->
     
