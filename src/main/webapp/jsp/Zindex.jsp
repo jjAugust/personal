@@ -58,7 +58,7 @@ app.controller('customersCtrl', function($scope, $http) {
 <div class="wrapper">
     <div id="top">
         <div id="logo">
-            <img id="logoimage" src="images/logo.png" alt="logo">   <!-- Logo image -->
+           <!--  <img id="logoimage" src="images/logo.png" alt="logo"> -->   <!-- Logo image -->
             <h1 id="logotitle">{{names.sTitle}}</h1>    <!-- Logo text -->
         </div><!--/logo-->
     
@@ -78,7 +78,7 @@ app.controller('customersCtrl', function($scope, $http) {
     
     
     <header>    <!-- Header Title Start -->
-        <h1><img  src="images/logo.png" alt="logo">&nbsp;&nbsp; {{names.title}}&nbsp;&nbsp;<img src="images/logo.png" alt="logo"></h1>
+        <h1>&nbsp;&nbsp; {{names.title}}&nbsp;&nbsp;</h1>
         <h2>&ndash; {{names.career}} &ndash;</h2>
     </header>   <!-- Header Title End -->
     <section id="slideshow">    <!-- Slideshow Start -->
