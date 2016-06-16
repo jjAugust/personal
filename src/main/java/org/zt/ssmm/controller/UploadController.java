@@ -31,94 +31,91 @@ import org.zt.ssmm.util.ReturnUtil;
 @Controller
 @RequestMapping("/upload")
 public class UploadController {
-	@Autowired
-	private PicService pics;
+    @Autowired
+    private PicService pics;
 
 
-	@RequestMapping("/toUpload")
-	public String toUpload() {
-		return "/upload";
-	}
+    @RequestMapping("/toUpload")
+    public String toUpload() {
+        return "/upload";
+    }
 
-	/***
-	 * 保存文件
-	 *
-	 * @param file
-	 * @return
-	 */
-	private boolean saveFile(HttpServletRequest request, MultipartFile file,String type) {
-		// 判断文件是否为空
-		if (!file.isEmpty()) {
-			try {
-				Date i= new Date();
-				DateFormat j= new SimpleDateFormat("yyyyMMddhhmmss");
-				int p=(int)Math.round(Math.random()*9000+1000);
-				String filename=j.format(i)+""+p;
-				// 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
-				String filePath = 
-						request.getSession().getServletContext().getRealPath("/") +"upload/"
-//						"/usr/local/upload/" 
-						
-		+filename+".jpg";
+    /***
+     * 保存文件
+     *
+     * @param file
+     * @return
+     */
+    private boolean saveFile(HttpServletRequest request, MultipartFile file,String type) {
+        // 判断文件是否为空
+        if (!file.isEmpty()) {
+            try {
+                Date i= new Date();
+                DateFormat j= new SimpleDateFormat("yyyyMMddhhmmss");
+                int p=(int)Math.round(Math.random()*9000+1000);
+                String filename=j.format(i)+""+p;
+                // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
+                String filePath = 
+                        request.getSession().getServletContext().getRealPath("/") +"upload/"		+filename+".jpg";
 
-				Uploadpic temp=new Uploadpic();
-				temp.setName(request.getSession().getAttribute("id").toString());
-				temp.setBelong(type);
-				temp.setUrl(filename);
-				pics.insertUploadPic(temp);
+                Uploadpic temp=new Uploadpic();
+                temp.setName(request.getSession().getAttribute("id").toString());
+                temp.setBelong(type);
+                temp.setUrl(filename);
+                pics.insertUploadPic(temp);
 
-				//	                    file.getOriginalFilename();
-				File saveDir = new File(filePath);
-				if (!saveDir.getParentFile().exists())
-					saveDir.getParentFile().mkdirs();
+                //	                    file.getOriginalFilename();
+                File saveDir = new File(filePath);
+                if (!saveDir.getParentFile().exists())
+                    saveDir.getParentFile().mkdirs();
 
-				// 转存文件
-				file.transferTo(saveDir);
-				return true;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
+                // 转存文件
+                file.transferTo(saveDir);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * 上传图片
-	 *
-	 * @param files
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("/filesUpload")
-	@ResponseBody
-	public Object filesUpload(@RequestParam("myfiles") MultipartFile[] files,String type,
-			HttpServletRequest request) {
-		boolean j = false;
-		Returntype text=new Returntype();
-		if(request.getSession().getAttribute("id")==null){
-			ReturnUtil.fix(text,"_KEYS_f08");
-			return text;
-		}
-		else{
-			if (files != null && files.length > 0) {
-				for (int i = 0; i < files.length; i++) {
-					MultipartFile file = files[i];
-					// 保存文件
-					j= saveFile(request, file,type);
-					System.out.println(j);
-				}
-			}
+    /**
+     * 上传图片
+     *
+     * @param files
+     * @param request
+     * @return
+     */
+    @RequestMapping("/filesUpload")
+    @ResponseBody
+    public Object filesUpload(@RequestParam("myfiles") MultipartFile[] files,String type,
+            HttpServletRequest request) {
+        boolean j = false;
+        Returntype text=new Returntype();
+        if(request.getSession().getAttribute("id")==null){
+            ReturnUtil.fix(text,"_KEYS_f08");
+            return text;
+        }
+        else{
+            if (files != null && files.length > 0) {
+                for (int i = 0; i < files.length; i++) {
+                    MultipartFile file = files[i];
+                    // 保存文件
+                    j= saveFile(request, file,type);
+                    System.out.println(j);
+                }
+            }
 
-			if(j==true){
-				ReturnUtil.fix(text,"_KEYS_s06");
-				return text;
-			}
+            if(j==true){
+                ReturnUtil.fix(text,"_KEYS_s06");
+                return text;
+            }
 
-			else{
-				ReturnUtil.fix(text,"_KEYS_f08");
-				return text;
-			}
-		}
-	}
+            else{
+                ReturnUtil.fix(text,"_KEYS_f08");
+                return text;
+            }
+        }
+    }
 
 }

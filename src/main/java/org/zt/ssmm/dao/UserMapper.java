@@ -40,6 +40,6 @@ public interface UserMapper {
     int insertUploadPic(Uploadpic info);
     
      int 	insertArticle(Article info);
-     List<Article> selectArticle(String info) ;
+     Article selectArticle(String info) ;
      List<Uploadpic> selectUsPic(String info) ;
 }

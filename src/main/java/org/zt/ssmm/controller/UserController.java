@@ -93,7 +93,7 @@ public class UserController
 	public Object selectArticle(HttpServletRequest req,String id){  
 		Article ar =new Article();
 //		ar=us.selectArticle(id);
-		 List<Article> list = us.selectArticle(id);
+		Article list = us.selectArticle(id);
 
 		Returntype text=new Returntype();
 		ReturnUtil.fix(text,"_KEYS_s01");

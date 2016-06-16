@@ -28,7 +28,7 @@ public interface UserService
 	int insertBlackIp(Ip info);
 	int selectBlackIp(Ip info);
 	int insertArticle(Article info);
-	List<Article> selectArticle(String info);
+	Article selectArticle(String info);
 	List<Uploadpic> selectUsPic(String info);
 
 //	Integer deleteUserAndPassword(Integer valueOf);

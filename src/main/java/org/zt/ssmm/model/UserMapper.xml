@@ -81,7 +81,7 @@
   </select> 
   
   <select id="selectArticle" resultType="org.zt.ssmm.core.Article" parameterType="java.lang.String" >
-   select t.*,r.url,r.desr from article t LEFT JOIN upload_pic r on t.user_id=r.`name`  where t.id=#{id} and r.belong=#{id};
+   select t.* from article t where t.id=#{id};
   </select>
   
   <select id="selectUsPic" resultType="org.zt.ssmm.core.Uploadpic" parameterType="java.lang.String" >
