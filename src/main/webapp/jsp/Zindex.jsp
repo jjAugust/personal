@@ -45,7 +45,7 @@ var jp = getQueryString("id");
 var id = '<%=session.getAttribute("id")%>';
      var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope, $http) {
-    $http.get("/dataController/getinfo.do?id="+id)
+    $http.get("dataController/getinfo.do?id="+id)
     .success(function(response) {$scope.names = response.data;});
 });
 })();
@@ -69,7 +69,7 @@ app.controller('customersCtrl', function($scope, $http) {
                 <li><a href="#about">About</a></li>
                 <li><a href="#work">Work</a></li>
                 <li><a href="#footer">Contact</a></li>
-                <li><a href="/jsp/Zupdate.jsp">Edit</a></li>
+                <li><a href="jsp/Zupdate.jsp">Edit</a></li>
             </ul>      
         </nav>  <!-- Navigation End -->
     </div><!--/top-->

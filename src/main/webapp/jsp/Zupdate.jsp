@@ -47,7 +47,7 @@ var id = '<%=session.getAttribute("id")%>';
      // alert(jp);   
      var app = angular.module('myApp', []);
 app.controller('customersCtrl', function($scope, $http) {
-    $http.get("/dataController/getinfo.do?id="+id)
+    $http.get("dataController/getinfo.do?id="+id)
     .success(function(response) {$scope.names = response.data;});
 });
 })();

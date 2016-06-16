@@ -77,7 +77,7 @@
   </select>
   
   <select id="getUserdatabyid" resultType="org.zt.ssmm.core.Userdata" parameterType="java.lang.String" >
-  select * from userData t where t.userId=#{Userid};
+  select * from userdata t where t.userId=#{Userid};
   </select> 
   
   <select id="selectArticle" resultType="org.zt.ssmm.core.Article" parameterType="java.lang.String" >
@@ -89,7 +89,7 @@
   </select>
   
       <update id="updateUserdata" parameterType="org.zt.ssmm.core.Userdata" >
-    update userData
+    update userdata
     set sTitle = #{sTitle},
       title = #{title},
       career=#{career},
