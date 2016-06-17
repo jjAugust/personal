@@ -27,7 +27,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="js/jquery.carouFredSel-5.5.2.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="js/jquery.form.js"></script> 
-<script type="text/javascript" src="js/scripts.js"></script> <script type="text/javascript" src="js/angular.js"></script> 
+<script type="text/javascript" src="js/scripts.js"></script> 
+<script type="text/javascript" src="js/angular.js"></script> 
+<script type="text/javascript" src="js/angular-sanitize.js"></script> 
 
 </head>
 <!-- END OF DON'T TOUCH -->
@@ -53,6 +55,11 @@ app.controller('customersCtrl', function($scope, $http) {
     $http.get("userController/selectArticle.do?id="+jp)
     .success(function(response) {$scope.names = response.data;});
 });
+app.filter('trustHtml', function ($sce) {
+        return function (input) {
+            return $sce.trustAsHtml(input);
+        }
+    });
 })();
 
 </script>
@@ -79,26 +86,24 @@ app.controller('customersCtrl', function($scope, $http) {
     
     <header><!-- Work Showcase Section Start -->
     
-        <h1>Skies Of Spain  {{names.title}}</h1><!-- Title of project -->
-        <h2>photography  {{names.type}}</h2><!-- Category of project -->
+        <h1>{{names.title}}</h1><!-- Title of project -->
+        <h2>{{names.type}}</h2><!-- Category of project -->
         <!-- Description of project start -->
-        <p>{{names.text}}  Spain has always been a favorite country of mine because of the absolutely stunning skies. I am mesmerized by the dazzling colours and it is one of my favorite places to take photos. Below are my three favorite photographs that I have taken of this glorious setting.</p>
+        <p>{{names.description}} </p>
         <!-- Description of project end -->
     </header>
     
     <section id="workbody"><!-- Project images start -->
 
 
-       <!--  <img src="images/logo.png" alt="sky1"> --><!-- Use whatever images you like - they will automatically fit the width of the page -->
-        <h5>&ndash; Volcanic Skies</h5><!-- Image title -->
-        <img src="images/work/SkiesOfSpain/sky2.png" alt="sky2"><!-- Use whatever images you like - they will automatically fit the width of the page -->
-        <h5>&ndash; Godly Light</h5><!-- Image title -->
-        <img src="images/work/SkiesOfSpain/sky3.png" alt="sky3"><!-- Use whatever images you like - they will automatically fit the width of the page -->
-        <h5>&ndash; Pale Evening</h5><!-- Image title -->
+        
+        <div ng-bind-html='names.text|trustHtml'></div>
+
+
     </section><!-- Project images end -->
     
     <hr/>   <!-- Horizontal Line -->
-    
+
     
     
     <section id="work"> <!-- Work Links Section Start -->
