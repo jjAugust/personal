@@ -27,6 +27,7 @@ import org.zt.ssmm.core.Returntype;
 import org.zt.ssmm.core.Uploadpic;
 import org.zt.ssmm.service.PicService;
 import org.zt.ssmm.service.UserService;
+import org.zt.ssmm.util.Common;
 import org.zt.ssmm.util.ReturnUtil;
 @Controller
 @RequestMapping("/upload")
@@ -55,8 +56,7 @@ public class UploadController {
                 int p=(int)Math.round(Math.random()*9000+1000);
                 String filename=j.format(i)+""+p;
                 // 保存的文件路径(如果用的是Tomcat服务器，文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\upload\\文件夹中  )
-                String filePath = 
-                        request.getSession().getServletContext().getRealPath("/") +"upload/"		+filename+".jpg";
+              String filePath = Common.runClassPath+"images/upload/"+filename+".jpg";
 
                 Uploadpic temp=new Uploadpic();
                 temp.setName(request.getSession().getAttribute("id").toString());
