@@ -1,6 +1,5 @@
 package org.zt.ssmm.core;
 
-import java.util.List;
 
 
 public class Article {
@@ -9,18 +8,21 @@ public class Article {
 	private String title;
 	private String type;
 	private String text;
-//	private Uploadpic Uploadpic;
-//	private List<Uploadpic> Uploadpic;
-//
-//	public List<Uploadpic> getUploadpics() {
-//		return Uploadpic;
-//	}
-//	public void setUploadpics(List<Uploadpic> uploadpics) {
-//		Uploadpic = uploadpics;
-//	}
-	private String url;
+	private String description;
+	
+
+    
+    private String url;
 	private String desr;
-	public String getUrl() {
+	
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getUrl() {
 		return url;
 	}
 	public void setUrl(String url) {

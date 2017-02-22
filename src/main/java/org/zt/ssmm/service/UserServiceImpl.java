@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService
 		return userMapper.insertArticle(info);
 	}
 	@Override
-	public List<Article> selectArticle(String info) 
+	public Article selectArticle(String info) 
 	{
 		return userMapper.selectArticle(info);
 	}

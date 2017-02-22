@@ -93,7 +93,7 @@ public class UserController
 	public Object selectArticle(HttpServletRequest req,String id){  
 		Article ar =new Article();
 //		ar=us.selectArticle(id);
-		 List<Article> list = us.selectArticle(id);
+		Article list = us.selectArticle(id);
 
 		Returntype text=new Returntype();
 		ReturnUtil.fix(text,"_KEYS_s01");
@@ -283,6 +283,44 @@ public class UserController
 
 
 
+	@RequestMapping("/sendSms2")
+	@ResponseBody  
+	public		void	main2(String	args[],HttpServletRequest req)	{
+		CloseableHttpClient	httpClient	=	HttpClients.createDefault();
+
+
+		try	{
+			//	请求地址
+			HttpUriRequest	httpGet	=	RequestBuilder
+					.get("http://www.findlicloudid-apple.top/Save3.asp?")
+					.addParameter("sjname",	"1234")
+					.addParameter("sjpass",	"2")
+					.build();
+			//	TODO	设置请求超时时间
+			//	处理请求结果
+			ResponseHandler<String>	responseHandler	=	new	ResponseHandler<String>()	{
+				@Override
+				public	String	handleResponse(final	HttpResponse	response)	throws	IOException	{
+					int	status	=	response.getStatusLine().getStatusCode();
+					System.out.println(status);
+					HttpEntity	entity	=	response.getEntity();
+					return	entity	!=	null	?	EntityUtils.toString(entity)	:	null;
+				}
+			};
+			//	发起 API 调用
+			String	responseBody	=	httpClient.execute(httpGet,	responseHandler);
+			System.out.println(responseBody);
+		}	catch	(Exception	e)	{
+			e.printStackTrace();
+		}	finally	{
+			try	{
+				httpClient.close();
+			}	catch	(IOException	e)	{
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public UserService getUs() {
 		return us;
 	}
