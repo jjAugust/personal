@@ -236,7 +236,7 @@ public class UserController
 	public		void	main(String	args[],String telcode,HttpServletRequest req)	{
 		CloseableHttpClient	httpClient	=	HttpClients.createDefault();
 		Integer i=(int) Math.round(Math.random()*9000+1000);
-		String str="{'code':'"+i.toString()+"','product':'乖乖博客'}";
+		String str="{'code':'"+i.toString()+"','product':'智领'}";
 
 		HttpSession session = req.getSession();
 		session.setAttribute("telcode", i.toString());
