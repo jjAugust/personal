@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.zt.ssmm.core.Article;
 import org.zt.ssmm.core.Returntype;
+import org.zt.ssmm.core.Spatial;
 import org.zt.ssmm.core.User;
 import org.zt.ssmm.core.Userdata;
 import org.zt.ssmm.service.UserService;
@@ -93,7 +94,7 @@ public class UserController
 	public Object selectArticle(HttpServletRequest req,String id){  
 		Article ar =new Article();
 //		ar=us.selectArticle(id);
-		Article list = us.selectArticle(id);
+		List<Spatial> list = us.selectArticle(id);
 
 		Returntype text=new Returntype();
 		ReturnUtil.fix(text,"_KEYS_s01");

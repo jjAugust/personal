@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zt.ssmm.core.Article;
 import org.zt.ssmm.core.Ip;
+import org.zt.ssmm.core.Plt1;
+import org.zt.ssmm.core.Spatial;
 import org.zt.ssmm.core.Uploadpic;
 import org.zt.ssmm.core.User;
+import org.zt.ssmm.core.UserTimes;
+import org.zt.ssmm.core.UserTips;
 import org.zt.ssmm.core.Userdata;
 import org.zt.ssmm.dao.UserMapper;
 
@@ -23,7 +27,11 @@ public class UserServiceImpl implements UserService
 		return userMapper.selectByPrimaryKey(id);
 	}
 	
-
+	@Override
+	public List<UserTimes> QuerySeqByUserId(String id)
+	{
+		return userMapper.QuerySeqByUserId(id);
+	}
 	
 	@Override
 	public List<User> getAllUsers() 
@@ -48,6 +56,12 @@ public class UserServiceImpl implements UserService
 	public int deleteUserAndPassword(int record) 
 	{
 		return userMapper.deleteByPrimaryKey(record);
+	}
+	
+	@Override
+	public int selectByNameOrPhone(User role) 
+	{
+		return userMapper.selectByNameOrPhone(role);
 	}
 	
 	@Override
@@ -118,11 +132,16 @@ public class UserServiceImpl implements UserService
 		return userMapper.insertArticle(info);
 	}
 	@Override
-	public Article selectArticle(String info) 
+	public List<Spatial> selectArticle(String info) 
 	{
 		return userMapper.selectArticle(info);
 	}
+	@Override
 	
+	public List<Plt1> selectplt1(String info)
+	{
+		return userMapper.selectPlt1(info);
+	}
 	@Override
 	public List<Uploadpic> selectUsPic(String info) 
 	{
@@ -136,4 +155,7 @@ public class UserServiceImpl implements UserService
 	public void setUserMapper(UserMapper userMapper) {
 		this.userMapper = userMapper;
 	}
+
+
+
 }

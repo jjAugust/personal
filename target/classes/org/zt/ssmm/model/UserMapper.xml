@@ -76,20 +76,37 @@
   select count(1) from su_phone_time t where t.phoneNum=#{phoneNum} and t.time=curdate();
   </select>
   
+   <select id="selectByNameOrPhone" resultType="java.lang.Integer" parameterType="org.zt.ssmm.core.User" >
+  select count(1) from user t where (t.name=#{name} or t.phone=#{name}) and t.password=#{password}; 
+  </select>
+  
   <select id="getUserdatabyid" resultType="org.zt.ssmm.core.Userdata" parameterType="java.lang.String" >
-  select * from userdata t where t.userId=#{Userid};
+  select * from userData t where t.userId=#{Userid};
   </select> 
   
-  <select id="selectArticle" resultType="org.zt.ssmm.core.Article" parameterType="java.lang.String" >
-   select t.* from article t where t.id=#{id};
+  <select id="SelectTracByUserId" resultType="org.zt.ssmm.core.UserTips" parameterType="java.lang.String" >
+select @rank:=@rank+1 AS ID,address_id,timestamp from (select address_id, from_unixtime(timestamp) as timestamp  from LATips t where t.user_id=#{id} order by `timestamp` asc) t1,(SELECT @rank:=0) t2;
+  </select> 
+  
+   <select id="QuerySeqByUserId" resultType="org.zt.ssmm.core.UserTimes" parameterType="java.lang.String" >
+SELECT  clusterId from PreClusterdata  where userid=#{id}
+	  </select> 
+  
+  <select id="selectArticle" resultType="org.zt.ssmm.core.Spatial" parameterType="java.lang.String" >
+   select t.proj4text from spatial_ref_sys t ;
   </select>
+  
+    <select id="selectPlt1" resultType="org.zt.ssmm.core.Plt1" parameterType="java.lang.String" >
+   select t.latitude lat,t.longitude lon from plt1 t ;
+  </select>
+  
   
   <select id="selectUsPic" resultType="org.zt.ssmm.core.Uploadpic" parameterType="java.lang.String" >
    select t.* from upload_pic t where t.name=#{id} and t.belong='index';
   </select>
   
       <update id="updateUserdata" parameterType="org.zt.ssmm.core.Userdata" >
-    update userdata
+    update userData
     set sTitle = #{sTitle},
       title = #{title},
       career=#{career},
