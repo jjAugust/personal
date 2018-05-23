@@ -14,9 +14,11 @@
         <title>上传图片</title> 
     </head>
     <body>
-        <form action="upload/filesUpload" method="POST" enctype="multipart/form-data"> 
+        <form action="upload/picUpload" method="POST" enctype="multipart/form-data"> 
          <input  name="type" style="display:none;" value="test"/>
-            yourfile: <input type="file" name="myfiles"/><br/> 
+<!--             yourfile: <input type="file" name="myfiles"/><br/>  -->
+            服务器已经启动成功.........
+            请上传您需要识别的图片......
             yourfile: <input type="file" name="myfiles"/><br/> 
             <input type="submit" value="上传图片"/> 
         </form> 

@@ -249,6 +249,9 @@
 
 <div id="mainlogin">
     <script type="text/javascript">
+
+
+
     function changeImg() {
         var imgSrc = $("#imgObj");
         var src = imgSrc.attr("src");
@@ -282,7 +285,6 @@ var wait=60;
         cache: false,
         dataType: "json",
         success: function (data) {  
-
             alert(data.message);
             if(data.message=="添加成功"){
                 alert("1秒以后跳转登录页");

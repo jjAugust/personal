@@ -36,6 +36,12 @@
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
+   <delete id="deleteBlackIp" parameterType="java.lang.Integer" >
+    delete from blackip
+     
+  </delete>
+  
   <insert id="insert" parameterType="org.zt.ssmm.core.User" >
     insert into user (id, name, password, 
       birthdate)
@@ -88,14 +94,163 @@
 select @rank:=@rank+1 AS ID,address_id,timestamp from (select address_id, from_unixtime(timestamp) as timestamp  from LATips t where t.user_id=#{id} order by `timestamp` asc) t1,(SELECT @rank:=0) t2;
   </select> 
   
+    <select id="SelectZeroPhase" resultType="org.zt.ssmm.core.UserTimesPercent" parameterType="java.lang.String" >
+<!-- SELECT A.* from (SELECT
+	clusterId as sub_str,
+	count(clusterId) /@rank AS percent
+FROM
+	PreClusterdata,(
+		SELECT
+			@rank:=count(clusterId)  
+		FROM
+			PreClusterdata
+		WHERE
+			userid = #{id}
+	)t2
+WHERE
+	userid = #{id}
+	and lineid &lt;236
+GROUP BY
+	clusterId)A order by A.percent desc; -->
+	
+	SELECT A.* from (
+		SELECT
+			p.clusterId AS sub_str ,
+			count(p.clusterId) /@rank AS percent
+		FROM
+			(
+				SELECT
+					t.*
+				FROM
+					PreClusterdata t
+				WHERE
+					t.userid = #{id}
+
+				ORDER BY
+					t.begindate DESC
+				LIMIT 1000
+			) p ,
+			(
+				SELECT
+					@rank := count(m.clusterId)
+				FROM
+					(
+						SELECT
+							t.*
+						FROM
+							PreClusterdata t
+						WHERE
+							t.userid = #{id}
+
+						ORDER BY
+							t.begindate DESC
+						LIMIT 1000
+					) m
+
+			) t2
+GROUP BY
+	p.clusterId)A order by A.percent desc;
+	
+	
+  </select> 
+  
+  
+  
+   <select id="SelectPercentByTime" resultType="org.zt.ssmm.core.UserTimesPercent" parameterType="org.zt.ssmm.core.IdTimeInfo" >
+SELECT
+	A.*
+FROM
+	(
+		SELECT
+			t.clusterId AS sub_str ,
+			count(t.clusterId) /@rank AS percent
+		FROM
+			PreClusterdata t ,
+			(
+				SELECT
+					@rank := count(clusterId)
+				FROM
+					PreClusterdata p
+				WHERE
+					(
+						(
+							p.begintime >= #{s_time}
+							AND 
+							p.begintime &lt;= #{e_time}
+						)
+						OR(
+							p.endtime >=  #{s_time}
+							AND p.endtime &lt;= #{e_time}
+						)
+					)
+				AND p.userid = #{id}
+				AND p.begindate &lt; #{sdate}
+				AND (SELECT CASE WHEN DAYOFWEEK(#{sdate}) > 5 THEN DAYOFWEEK(p.begindate) > 5 ELSE DAYOFWEEK(p.begindate) &lt;= 5 END)
+			) m
+		WHERE
+			(
+				(
+					t.begintime >=  #{s_time}
+					AND t.begintime &lt;= #{e_time}
+				)
+				OR(
+					t.endtime >= #{s_time}
+					AND t.endtime &lt;= #{e_time}
+				)
+			)
+		AND t.userid = #{id}
+		AND t.begindate &lt; #{sdate}
+		AND (SELECT CASE WHEN DAYOFWEEK(#{sdate}) > 5 THEN DAYOFWEEK(t.begindate) > 5 ELSE DAYOFWEEK(t.begindate) &lt;= 5 END)
+		GROUP BY
+			t.clusterId
+	) A
+ORDER BY
+	A.percent DESC;
+  </select> 
+  
    <select id="QuerySeqByUserId" resultType="org.zt.ssmm.core.UserTimes" parameterType="java.lang.String" >
-SELECT  clusterId from PreClusterdata  where userid=#{id}
+<!-- SELECT  clusterId from PreClusterdata  where userid=#{id} --> 	<!-- and lineid &lt;236 -->
+	 
+	 SELECT
+	p.clusterId
+FROM
+	(
+		SELECT
+			t.*
+		FROM
+			PreClusterdata t
+		WHERE
+			t.userid = #{id}
+		ORDER BY
+			t.begindate DESC
+		LIMIT 1000
+	) p
+ORDER BY
+	p.begindate ASC;
+	  </select> 
+	  
+	     <select id="QueryInfoByUserId" resultType="org.zt.ssmm.core.Cluster" parameterType="java.lang.String" >
+SELECT  userid as user_id,lat as longtitude,lon as latitude from PreClusterdata  where userid=#{id} and lineid &lt;24809
 	  </select> 
   
   <select id="selectArticle" resultType="org.zt.ssmm.core.Spatial" parameterType="java.lang.String" >
    select t.proj4text from spatial_ref_sys t ;
   </select>
   
+  
+  <select id="querypicinfo" resultType="java.lang.String" parameterType="java.lang.String" >
+   select t.name from upload_pic t where t.url=#{id};
+  </select>
+  
+  <update id="addpicinfo" parameterType="org.zt.ssmm.core.Uploadpic" >
+   update upload_pic t set t.name=#{name} where t.url=#{id};
+  </update>
+    
+  <select id="querylastpicinfo" resultType="java.lang.String">
+   select t.url from upload_pic t order by t.inserttime desc LIMIT 0,1;
+  </select>
+  
+
     <select id="selectPlt1" resultType="org.zt.ssmm.core.Plt1" parameterType="java.lang.String" >
    select t.latitude lat,t.longitude lon from plt1 t ;
   </select>

@@ -3,12 +3,29 @@
  */
 package org.zt.ssmm.util;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 import javax.servlet.http.HttpServlet;
+
+
+
+//import leetCode.selfDividingNumbers.Interval;
 
 
 
@@ -181,6 +198,51 @@ public class Common {
         return strTime;
     }
 
+    /*
+	 * 处理https GET/POST请求
+	 * 请求地址、请求方法、参数
+	 * */
+	public static String httpsRequest(String requestUrl,String requestMethod,String outputStr){
+		StringBuffer buffer=null;
+		try{
+		//创建SSLContext
+		SSLContext sslContext=SSLContext.getInstance("SSL");
+		TrustManager[] tm={new MyX509TrustManager()};
+		//初始化
+		sslContext.init(null, tm, new java.security.SecureRandom());;
+		//获取SSLSocketFactory对象
+		SSLSocketFactory ssf=sslContext.getSocketFactory();
+		URL url=new URL(requestUrl);
+		HttpsURLConnection conn=(HttpsURLConnection)url.openConnection();
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		conn.setUseCaches(false);
+		conn.setRequestMethod(requestMethod);
+		//设置当前实例使用的SSLSoctetFactory
+		conn.setSSLSocketFactory(ssf);
+		conn.connect();
+		//往服务器端写内容
+		if(null!=outputStr){
+			OutputStream os=conn.getOutputStream();
+			os.write(outputStr.getBytes("utf-8"));
+			os.close();
+		}
+		
+		//读取服务器端返回的内容
+		InputStream is=conn.getInputStream();
+		InputStreamReader isr=new InputStreamReader(is,"utf-8");
+		BufferedReader br=new BufferedReader(isr);
+		buffer=new StringBuffer();
+		String line=null;
+		while((line=br.readLine())!=null){
+			buffer.append(line);
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return buffer.toString();
+	}
+
 
     public static String getParameter(HttpServlet servlet, String key) {
         String v = servlet.getServletContext().getInitParameter(key);
@@ -188,5 +250,37 @@ public class Common {
             v = servlet.getServletContext().getInitParameter(v);
         return v;
     }
-
+    public class Interval {
+	      int start;
+	      int end;
+	      Interval() { start = 0; end = 0; }
+	      Interval(int s, int e) { start = s; end = e; }
+	  }
+    public int eraseOverlapIntervals(Interval[] intervals) {
+		  if(intervals.length==0) return 0;
+	         int res=0;
+	         Arrays.sort(intervals, new Comparator<Interval>() {  
+	             public int compare(Interval o1, Interval o2) {  
+	                 if (o1.end == o2.end) {  
+	                     return o1.start - o2.start;  
+	                 } else {  
+	                     return o1.end - o2.end;  
+	                 }  
+	             }  
+	         }); 
+	 		 int right=intervals[0].end;
+		        for(int i=1;i<intervals.length;i++){
+		        	Interval t= intervals[i];
+		        	int a=t.start;
+		        	int b=t.end;
+		        	
+		        		if(a>=right){
+		        			right=b;
+		        		}else{
+		        			res++;
+		        		}
+		        	
+		        }
+		        return res;
+	    }
 }

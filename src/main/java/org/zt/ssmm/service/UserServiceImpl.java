@@ -5,12 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zt.ssmm.core.Article;
+import org.zt.ssmm.core.Cluster;
+import org.zt.ssmm.core.IdTimeInfo;
 import org.zt.ssmm.core.Ip;
 import org.zt.ssmm.core.Plt1;
 import org.zt.ssmm.core.Spatial;
 import org.zt.ssmm.core.Uploadpic;
 import org.zt.ssmm.core.User;
 import org.zt.ssmm.core.UserTimes;
+import org.zt.ssmm.core.UserTimesPercent;
 import org.zt.ssmm.core.UserTips;
 import org.zt.ssmm.core.Userdata;
 import org.zt.ssmm.dao.UserMapper;
@@ -22,17 +25,59 @@ public class UserServiceImpl implements UserService
 	private UserMapper userMapper;
 
 	@Override
+	public int addpicinfo(Uploadpic pic)
+	{
+		return userMapper.addpicinfo(pic);
+	}
+	
+	@Override
+	public String querylastpicinfo()
+	{
+		return userMapper.querylastpicinfo();
+	}
+	
+	@Override
+	public String querypicinfo(String id)
+	{
+		return userMapper.querypicinfo(id);
+	}
+
+	@Override
 	public User getUserById(Integer id) 
 	{
 		return userMapper.selectByPrimaryKey(id);
 	}
+	@Override
+	public   List<Cluster> QueryInfoByUserId(String id)
+
+	{
+		return userMapper.QueryInfoByUserId(id);
+	}
 	
+	@Override
+	public   int deleteBlackIp(int record)
+
+	{
+		return userMapper.deleteBlackIp(record);
+	}
+	@Override
+	public  	List<UserTimesPercent>  SelectPercentByTime(IdTimeInfo idTimeInfo)
+	{
+		return userMapper.SelectPercentByTime(idTimeInfo);
+	}
+
 	@Override
 	public List<UserTimes> QuerySeqByUserId(String id)
 	{
 		return userMapper.QuerySeqByUserId(id);
 	}
 	
+	@Override
+	public List<UserTimesPercent>  SelectZeroPhase(String id)
+	{
+		return userMapper.SelectZeroPhase(id);
+	}
+
 	@Override
 	public List<User> getAllUsers() 
 	{
@@ -154,6 +199,10 @@ public class UserServiceImpl implements UserService
 
 	public void setUserMapper(UserMapper userMapper) {
 		this.userMapper = userMapper;
+	}
+	@Override
+	public List<UserTips> SelectTracByUserId(String id) {
+		return null;
 	}
 
 

@@ -79,8 +79,12 @@ public class UserController
 	@ResponseBody  
 	public Object test(HttpServletRequest req){  
 
+		int i = us.deleteBlackIp(1);
 		Returntype text=new Returntype();
-		ReturnUtil.fix(text,"_KEYS_f01");
+		if(i==1)
+		ReturnUtil.fix(text,"_KEYS_s01");
+		else
+			ReturnUtil.fix(text,"_KEYS_f01");
 		return text;  
 	}  
 
